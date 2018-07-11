@@ -1,0 +1,38 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          Tokugawa BOT 
+# Required-Start:    
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:	     0 1 6
+# Short-Description: Provides tokugawa discord service.
+### END INIT INFO
+
+PIDOF_PROG=`which pidof`
+PYTHON_PROG=`which python3`
+
+case "$1" in
+  start)
+	echo "Starting Tokugawa Discord Bot"
+	sudo -u root ${PYTHON_PROG} /root/.discord_bots/toku_bot.py &
+	;;
+  restart|reload|force-reload)
+	echo "Error: argument '$1' not supported" >&2
+	exit 3
+	;;
+  status)
+	TOKUGAWABOT_PID=`sudo -u root ${PIDOF_PROG} ${PYTHON_PROG}`
+	if [ $? -eq 0 ]; then
+		echo "Tokugawa BOT is running with pid ${TOKUGAWABOT_PID}"
+	else
+		echo "Tokugawa BOT is not running"
+	fi
+	;;
+  stop)
+	echo "Stopping Tokugawa BOT"
+	;;
+  *)
+	echo "Usage: $0 start|stop" >&2
+	exit 3
+	;;
+esac
