@@ -1,6 +1,13 @@
 Lyndros's Crypto/Tools
+++++++++++++++++++++++
 
-This a development repository for any crypto related scripts/tools that i find useful.
+A beautiful repository for my crypto related scripts/tools.
 
-If you find it useful I accept donations to my etherum address:
-0x44F102616C8e19fF3FED10c0b05B3d23595211ce
+\
+|--> discord_bots/	# Bots for discord app connecting to the MN explorer API. 
+|--> services/		# Linux scripts to add MN and BOT services at boot time.
+
+Blame to: lyndros@hotmail.com
+
+Donations are welcome!
+  ethereum address: 0x44F102616C8e19fF3FED10c0b05B3d23595211ce
