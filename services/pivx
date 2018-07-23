@@ -1,0 +1,40 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          Pivxd 
+# Required-Start:    
+# Required-Stop:
+# Default-Start:     2 3 4 5
+# Default-Stop:	     0 1 6
+# Short-Description: Provides pivxd service.
+### END INIT INFO
+
+PIDOF_PROG=/bin/pidof
+SERVER_PROG=/usr/bin/pivxd
+STOP_PROG=/usr/bin/pivx-cli
+
+case "$1" in
+  start)
+	echo "Starting Pivxd"
+	sudo -u root ${SERVER_PROG} -datadir='/root/.pivx/' -daemon
+	;;
+  restart|reload|force-reload)
+	echo "Error: argument '$1' not supported" >&2
+	exit 3
+	;;
+  status)
+	SERVER_PROG_PID=`sudo -u root ${PIDOF_PROG} ${SERVER_PROG}`
+	if [ $? -eq 0 ]; then
+		echo "Pivxd is running with pid ${SERVER_PROG_PID}"
+	else
+		echo "Pivxd is not running"
+	fi
+	;;
+  stop)
+	echo "Stopping Pivxd"
+	sudo -u root ${STOP_PROG} stop
+	;;
+  *)
+	echo "Usage: $0 start|stop" >&2
+	exit 3
+	;;
+esac
