@@ -4,10 +4,11 @@ Lyndros's Crypto/Tools<br/>
 A beautiful repository for my crypto related scripts/tools.
 <br/>
 \ <br/>
-|--> discord_bots/		# Bots for discord app connecting to the MN explorer API.<br/> 
-|--> services/		    	# Linux scripts to add MN and BOT services at boot time.<br/>
-|--> enigma_catalyst_bots/  	# Bots for different exchanges based in enigma catalyst.<br/>
-|--> binance_bots/ 		# Bots based in python binance api.<br/>
+|--> binance_bots/          	# Bots based in python binance api.<br/>
+|--> catalyst_bots/         	# Bots for different exchanges based in enigma catalyst.<br/>
+|--> discord_bots/          	# Bots for discord app connecting to the MN explorer API.<br/>
+|--> services/              	# Linux scripts to add MN and BOT services at boot time.<br/>
+
 <br/>
 Blame to: lyndros@hotmail.com<br/>
 <br/>
