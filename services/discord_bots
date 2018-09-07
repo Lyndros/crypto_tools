@@ -1,7 +1,7 @@
 #! /bin/sh
 ### BEGIN INIT INFO
-# Provides:          Discord BOTs 
-# Required-Start:    
+# Provides:          Discord BOTs
+# Required-Start:
 # Required-Stop:
 # Default-Start:     2 3 4 5
 # Default-Stop:	     0 1 6
@@ -13,16 +13,16 @@ PYTHON_PROG=`which python3`
 case "$1" in
   start)
 	echo "Starting Discord Bots"
-	${PYTHON_PROG} /root/.Discord_Bots/TOK_Bot.py &
-	${PYTHON_PROG} /root/.Discord_Bots/SMART_Bot.py &
+	${PYTHON_PROG} /root/.Discord_Bots/discord_superbot.py config_tokugawa.yml  &
+	${PYTHON_PROG} /root/.Discord_Bots/discord_superbot.py config_smartcash.yml &
 	;;
   restart|reload|force-reload)
 	echo "Error: argument '$1' not supported" >&2
 	exit 3
 	;;
   status)
-	TOKBOT_PID=`ps ax | grep 'TOK_Bot.py' | grep -v grep | awk '{print $1}'`
-	SMARTBOT_PID=`ps ax | grep 'SMART_Bot.py' | grep -v grep | awk '{print $1}'`
+	TOKBOT_PID=`ps ax | grep 'config_tokugawa' | grep -v grep | awk '{print $1}'`
+	SMARTBOT_PID=`ps ax | grep 'config_smartcash' | grep -v grep | awk '{print $1}'`
 	if [ ! -z "$TOKBOT_PID" ] & [ ! -z "$SMARTBOT_PID" ] ; then
 		echo "Discord BOTs are running with pid ${TOKBOT_PID} ${SMARTBOT_PID}"
 	else
@@ -30,8 +30,8 @@ case "$1" in
 	fi
 	;;
   stop)
-        TOKBOT_PID=`ps ax | grep 'TOK_Bot.py' | grep -v grep | awk '{print $1}'`
-        SMARTBOT_PID=`ps ax | grep 'SMART_Bot.py' | grep -v grep | awk '{print $1}'`
+        TOKBOT_PID=`ps ax | grep 'config_tokugawa' | grep -v grep | awk '{print $1}'`
+        SMARTBOT_PID=`ps ax | grep 'config_smartcash' | grep -v grep | awk '{print $1}'`
         if [ ! -z "$TOKBOT_PID" ] & [ ! -z "$SMARTBOT_PID" ] ; then
 		echo "Stopping Discord BOTs"
 		kill -9 ${TOKBOT_PID}
