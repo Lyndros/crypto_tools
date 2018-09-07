@@ -1,16 +1,19 @@
+<html>
+<body style="font-family: Consolas, monospace; font-size:14pt;">
 Lyndros's Crypto/Tools<br/>
-++++++++++++++++++++++<br/>
-<br/>
+──────────────────────<br/>
 A beautiful repository for my crypto related scripts/tools.
 <br/>
-\ <br/>
-|--> binance_bots/          	# Bots based in python binance api.<br/>
-|--> catalyst_bots/         	# Bots for different exchanges based in enigma catalyst.<br/>
-|--> discord_bots/          	# Bots for discord app connecting to the MN explorer API.<br/>
-|--> services/              	# Linux scripts to add MN and BOT services at boot time.<br/>
-
+┐<br/>
+├─ binance_bots/          	# Bots based in python binance api.<br/>
+├─ catalyst_bots/         	# Bots for different exchanges based in enigma catalyst.<br/>
+├─ discord_bots/          	# Bots for discord app connecting to the MN explorer API.<br/>
+└─ services/              	# Linux scripts to add MN and BOT services at boot time.<br/>
 <br/>
-Blame to: lyndros@hotmail.com<br/>
+If you want o support this repository I accept donations even 1 TOK is always welcome :-)!<br/><br/>
+&nbsp; &nbsp;> <b>ethereum address:</b> <i>0x44F102616C8e19fF3FED10c0b05B3d23595211ce</i><br/>
+&nbsp; &nbsp;> <b>tokugawa address:</b> <i>TjrQBaaCPoVW9mPAZHPfVx9JJCq7yZ7QnA</i><br/>
 <br/>
-Donations are welcome!<br/>
-  ethereum address: 0x44F102616C8e19fF3FED10c0b05B3d23595211ce<br/>
+For any questions feel free to contact me at lyndros@hotmail.com<br/>
+</body>
+</html>
