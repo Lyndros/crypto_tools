@@ -1,0 +1,20 @@
+###################################################################
+# If you want o support this repository I accept donations        #
+# even 1 TOK is always welcome :-)!                               #
+# > ethereum address: 0x44F102616C8e19fF3FED10c0b05B3d23595211ce  #
+# > tokugawa address: TjrQBaaCPoVW9mPAZHPfVx9JJCq7yZ7QnA          #
+###################################################################
+#MASTERNODE CONFIGURATION, PLEASE SET THE SETTINGS AS NEEDED
+#NOTE: USE THE SAME IP ADDRESS IF USING THE SAME VPS FOR ALL MNs
+MASTERNODES:
+      - name:             MN01
+        rpcport:          21116          
+        ip:               $IP_ADDR_MN01$          #IP FOR MN01
+        port:             21117                   #EXTERNAL PORT FOR MN01
+        privkey:          $MN01_PRIVKEY$
+
+      - name:             MN02
+        rpcport:          21118
+        ip:               $IP_ADDR_MN02$          #IP FOR MN02 can be equal to MN01
+        port:             21119                   #EXTERNAL PORT FOR MN02
+        privkey:          $MN02_PRIVKEY$
