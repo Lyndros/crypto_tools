@@ -24,6 +24,9 @@
 <br/> -- This is a configuration example, please modify as needed before running the installer--
 <br/> &nbsp; &nbsp; $wget https://raw.githubusercontent.com/Lyndros/crypto_tools/master/tokugawa_installer/masternodes.yml
 <br/>
+<br/> &nbsp; &nbsp; In addition get your tokugawad binary from your favourite source or compile it.
+<br/> &nbsp; &nbsp; A bootstrap.dat file is optional but very recommended if you want to have your MNs running asap.
+<br/>
 <br/> <b>2. Setting your configuration file</b>
 <br/> 
 <br/> Modify the configuration file to match your needs: mainly IP, port and masternode privkey settings...
@@ -38,6 +41,11 @@
 <br/>
 <br/> <b>4. Enabling tokugawa services automatically at boot</b>
 <br/> &nbsp; &nbsp; $systemctl enable tokugawa
+<br/> 
+<br/> If during the installation ufw firewall was detected the following steps must be done:
+<br/> &nbsp; &nbsp; $ufw stop; 
+<br/> &nbsp; &nbsp; $ufw allow tokugawa; $ufw reload; $ufw enable; 
+<br/> &nbsp; &nbsp; $systemctl enable ufw;
 <br/>
 <br/> <b>5. Donations</b>
 <br/> If you want to motivate me and support this repository I accept donations even 1 TOK is always welcome :-)!
