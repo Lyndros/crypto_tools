@@ -49,6 +49,18 @@ def generate_tokugawaconf(masternode_folder, mn):
         config.write('masternode=1\n')
         config.write('masternodeprivkey=%s\n' %mn['privkey'])
 
+#Function to generate the tokugawa-server UFW application profile
+def generate_tokugawa_firewall_rules(port_list):
+    with open(/etc/ufw/applications.d/tokugawa-server_testinst', 'w') as config:
+        config.write('[Tokugawa]\n')
+        config.write('title=Tokugawa Daemon\n')
+        config.write('description=Tokugawa Daemon FW configuration by Lyndros autoinstaller\n')
+        #Generate string in that way 1,2,3,4/tcp
+        str_ports = "".join("%s," %i for i in port_list)
+        ufw_ports = str_ports[:-1]
+        #Note protocol is tcp for that service only
+        config.write('port=%s/tcp' %ufw_ports)
+
 #Install masternode
 def install_masternode(daemon_file, bootstrap_file, dest_folder, mn_config):
     print("Installing masternode: %s" %mn_config['name'])
@@ -83,3 +95,12 @@ with open(args.config_file, 'r') as ymlfile:
 #Install all masternodes
 for mn_config in cfg['MASTERNODES']:
     install_masternode(args.binary_file, args.bootstrap, args.dest_folder, mn_config)
+
+#Generate Tokugawa service file
+
+#Generate UFW application configuration
+port_list = []
+for mn_port in cfg['MASTERNODES']['port']:
+    port_list.add(mn_port)
+
+print(port_list)

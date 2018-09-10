@@ -4,6 +4,19 @@
 # > ethereum address: 0x44F102616C8e19fF3FED10c0b05B3d23595211ce  #
 # > tokugawa address: TjrQBaaCPoVW9mPAZHPfVx9JJCq7yZ7QnA          #
 ###################################################################
+#GENERAL OS SETTINGS
+SYSTEM:
+        description: Ubuntu 18.04
+        packages:    build-essential libtool autotools-dev pkg-config libssl-dev libboost-all-dev autoconf automake
+                     libqt4-dev libminiupnpc-dev libgmp-dev openssl libdb4.8-dev libdb4.8++-dev
+
+#FIREWALL SETTINGS
+FIREWALL:
+        enable:        yes
+        description:   ufw
+        packages:      ufw
+        app_folders:   /etc/ufw/applications.d/
+
 #MASTERNODE CONFIGURATION, PLEASE SET THE SETTINGS AS NEEDED
 #NOTE: USE THE SAME IP ADDRESS IF USING THE SAME VPS FOR ALL MNs
 MASTERNODES:
