@@ -12,9 +12,9 @@
 <br/> Additionally ufw firewall must be installed:
 <br/> $sudo apt install ufw
 <br/> 
-<br/> In addition the following files/programms are needed:
+<br/> In addition the following files are needed:
 <br/> &nbsp; &nbsp; - A precompiled binary containing the latest version of the Tokugawa daemon 
-<br/> all dependant libraries must had been pre-installed (future versions will do for you).
+<br/> &nbsp; &nbsp;   NOTE: that the binary dependant libraries must be pre-installed (Work on progress).
 <br/> &nbsp; &nbsp; - Ufw firewall will be automatically configured to enable SSH/Tokugawa ports. ($apt install ufw).
 <br/> &nbsp; &nbsp; - [Optional] A bootstrap file to accelerate the initial masternode synchronisation.
 <br/>
@@ -36,10 +36,10 @@
 <br/> If you run multiple masternodes in the same VPS, you can share the IP, take into account that ports must be different.
 <br/>
 <br/> <b>3. Running the installer</b>
-<br/> &nbsp; &nbsp; $./tokugawa_installer.py <installation_directory> <tokugawad_executable> <configuration.yml> [ --bootstrap <bootstrap.dat> ]
+<br/> &nbsp; &nbsp; $./tokugawa_installer.py installation_directory tokugawad_executable configuration.yml [ --bootstrap bootstrap.dat ]
 <br/>
 <br/> &nbsp; &nbsp; Execution examples:
-<br/> &nbsp; &nbsp; $./tokugawa_installer.py /opt/usr/toku /tmp/tokugawad /tmp/masternodes.yml --bootstrap /tmp/bootstrap.dat
+<br/> &nbsp; &nbsp; $./tokugawa_installer.py /opt/usr/toku     /tmp/tokugawad /tmp/masternodes.yml --bootstrap /tmp/bootstrap.dat
 <br/> &nbsp; &nbsp; $./tokugawa_installer.py /opt/usr/tokugawa /tmp/tokugawad /tmp/masternodes.yml
 <br/>
 <br/> <b>4. Enabling tokugawa services automatically at boot</b>
