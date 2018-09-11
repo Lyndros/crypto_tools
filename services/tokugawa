@@ -1,39 +1,52 @@
 #! /bin/sh
 ### BEGIN INIT INFO
-# Provides:          Tokugawad 
-# Required-Start:    
+# Provides:          Tokugawad
+# Required-Start:
 # Required-Stop:
 # Default-Start:     2 3 4 5
-# Default-Stop:	     0 1 6
+# Default-Stop:      0 1 6
 # Short-Description: Provides tokugawad service.
 ### END INIT INFO
 
 PIDOF_PROG=/bin/pidof
-TOKUGAWAD_PROG=/usr/bin/Tokugawad
+
+MASTERNODES="MN01 MN02"
+TOKUGAWAD_FOLDER=/tmp/opt/tokugawa
+TOKUGAWAD_PREFIX=Tokugawad
 
 case "$1" in
-  start)
-	echo "Starting Tokugawad"
-	sudo -u root ${TOKUGAWAD_PROG} -datadir='/root/.Tokugawa/'
-	;;
-  restart|reload|force-reload)
-	echo "Error: argument '$1' not supported" >&2
-	exit 3
-	;;
-  status)
-	TOKUGAWAD_PROG_PID=`sudo -u root ${PIDOF_PROG} ${TOKUGAWAD_PROG}`
-	if [ $? -eq 0 ]; then
-		echo "Tokugawad is running with pid ${TOKUGAWAD_PROG_PID}"
-	else
-		echo "Tokugawad is not running"
-	fi
-	;;
-  stop)
-	echo "Stopping Tokugawad"
-	sudo -u root ${TOKUGAWAD_PROG} -datadir='/root/.Tokugawa/' stop
-	;;
-  *)
-	echo "Usage: $0 start|stop" >&2
-	exit 3
-	;;
+    start)
+        for MN in ${MASTERNODES}; do
+            TOKUGAWAD_PROG="${TOKUGAWAD_FOLDER}/${TOKUGAWAD_PREFIX}_${MN}";
+            echo "Starting Tokugawad ${MN}";
+            echo "sudo -u root ${TOKUGAWAD_PROG} -datadir='${TOKUGAWAD_FOLDER}/.${MN}'";
+        done
+    ;;
+    restart|reload|force-reload)
+        echo "Error: argument '$1' not supported" >&2
+        exit 3
+    ;;
+    status)
+        for MN in ${MASTERNODES}; do
+            TOKUGAWAD_PROG="${TOKUGAWAD_FOLDER}/${TOKUGAWAD_PREFIX}_${MN}";
+            TOKUGAWAD_PROG_PID=`sudo -u root ${PIDOF_PROG} ${TOKUGAWAD_PROG}`;
+            if [ $? -eq 0 ]; then
+                echo "Tokugawad ${MN} is running with pid ${TOKUGAWAD_PROG_PID}"
+            else
+                echo "Tokugawad ${MN} is not running"
+            fi
+        done
+    ;;
+    stop)
+        for MN in ${MASTERNODES}; do
+            TOKUGAWAD_PROG="${TOKUGAWAD_FOLDER}/${TOKUGAWAD_PREFIX}_${MN}";
+            TOKUGAWAD_PROG_PID=`sudo -u root ${PIDOF_PROG} ${TOKUGAWAD_PROG}`;
+            echo "Stopping Tokugawad ${MN}";
+            echo "sudo -u root ${TOKUGAWAD_PROG} -datadir='${TOKUGAWAD_FOLDER}/.${MN}' stop";
+        done
+    ;;
+    *)
+        echo "Usage: $0 start|stop" >&2
+        exit 3
+    ;;
 esac

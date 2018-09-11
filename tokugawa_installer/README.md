@@ -1,6 +1,6 @@
 <html>
 <body style="font-family: Consolas, monospace; font-size:14pt;">
-<b>Tokugawa Masternode installer instructions</b>
+<b>Tokugawa Masternode beta installer instructions</b>
 <br/> ────────────────────────────────────────────────────
 <br/>
 <br/> A beautiful python installer that allows you to install your tokugawa masternodes withing minutes.
@@ -9,11 +9,14 @@
 <br/>
 <br/> In order to run this program the below python3 libraries need to be installed:
 <br/> &nbsp; &nbsp; $sudo apt-get install python3-pip python3-yaml
+<br/> Additionally ufw firewall must be installed:
+<br/> $sudo apt install ufw
 <br/> 
 <br/> In addition the following files/programms are needed:
-<br/> &nbsp; &nbsp; - A precompiled binary containing the latest version of the Tokugawa daemon.
+<br/> &nbsp; &nbsp; - A precompiled binary containing the latest version of the Tokugawa daemon 
+<br/> all dependant libraries must had been pre-installed (future versions will do for you).
+<br/> &nbsp; &nbsp; - Ufw firewall will be automatically configured to enable SSH/Tokugawa ports. ($apt install ufw).
 <br/> &nbsp; &nbsp; - [Optional] A bootstrap file to accelerate the initial masternode synchronisation.
-<br/> &nbsp; &nbsp; - [Optional] ufw if present the firewall will be automatically configured to enable SSH/Tokugawa ports. ($apt install ufw).
 <br/>
 <br/> <b>1. Copying the necessary files</b>
 <br/>
@@ -33,18 +36,18 @@
 <br/> If you run multiple masternodes in the same VPS, you can share the IP, take into account that ports must be different.
 <br/>
 <br/> <b>3. Running the installer</b>
-<br/> &nbsp; &nbsp; $./tokugawa_installer.py <tokugawad_file> <dest_folder> <mn_configuration.yml> [ --bootstrap <bootstrap_file.dat> ]
+<br/> &nbsp; &nbsp; $./tokugawa_installer.py <installation_directory> <tokugawad_executable> <configuration.yml> [ --bootstrap <bootstrap.dat> ]
 <br/>
 <br/> &nbsp; &nbsp; Execution examples:
-<br/> &nbsp; &nbsp; $./tokugawa_installer.py /tmp/tokugawad /opt/usr/toku masternodes.yml --bootstrap /tmp/bootstrap.dat
-<br/> &nbsp; &nbsp; $./tokugawa_installer.py /tmp/tokugawad /opt/usr/tokugawa masternodes.yml
+<br/> &nbsp; &nbsp; $./tokugawa_installer.py /opt/usr/toku /tmp/tokugawad /tmp/masternodes.yml --bootstrap /tmp/bootstrap.dat
+<br/> &nbsp; &nbsp; $./tokugawa_installer.py /opt/usr/tokugawa /tmp/tokugawad /tmp/masternodes.yml
 <br/>
 <br/> <b>4. Enabling tokugawa services automatically at boot</b>
 <br/> &nbsp; &nbsp; $systemctl enable tokugawa
 <br/> 
 <br/> If during the installation ufw firewall was detected the following steps must be done:
 <br/> &nbsp; &nbsp; $ufw stop; 
-<br/> &nbsp; &nbsp; $ufw allow tokugawa; $ufw reload; $ufw enable; 
+<br/> &nbsp; &nbsp; $ufw allow tokugawa; $ufw enable; 
 <br/> &nbsp; &nbsp; $systemctl enable ufw;
 <br/>
 <br/> <b>5. Donations</b>
