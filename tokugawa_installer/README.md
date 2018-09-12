@@ -3,6 +3,8 @@
 <b>Tokugawa Masternode beta installer instructions</b>
 <br/> ────────────────────────────────────────────────────
 <br/>
+<br/> BROKEN BUILD WORK IN PROGRESS... SORRY
+<br/>
 <br/> A beautiful python installer that allows you to install your tokugawa masternodes withing minutes.
 <br/>
 <br/> <b>0. Requirements</b>
@@ -39,8 +41,8 @@
 <br/> &nbsp; &nbsp; $./tokugawa_installer.py installation_directory tokugawad_executable configuration.yml [ --bootstrap bootstrap.dat ]
 <br/>
 <br/> &nbsp; &nbsp; Execution examples:
-<br/> &nbsp; &nbsp; $./tokugawa_installer.py /opt/usr/toku     /tmp/tokugawad /tmp/masternodes.yml --bootstrap /tmp/bootstrap.dat
-<br/> &nbsp; &nbsp; $./tokugawa_installer.py /opt/usr/tokugawa /tmp/tokugawad /tmp/masternodes.yml
+<br/> &nbsp; &nbsp; $./tokugawa_installer.py /opt/tokugawa /tmp/tokugawad /tmp/masternodes.yml --bootstrap /tmp/bootstrap.dat
+<br/> &nbsp; &nbsp; $./tokugawa_installer.py /opt/tokugawa /tmp/tokugawad /tmp/masternodes.yml
 <br/>
 <br/> <b>4. Enabling tokugawa services automatically at boot</b>
 <br/> &nbsp; &nbsp; $systemctl enable tokugawa

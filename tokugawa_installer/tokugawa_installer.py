@@ -14,7 +14,6 @@
 # > tokugawa address: TjrQBaaCPoVW9mPAZHPfVx9JJCq7yZ7QnA                      #
 #                                                                             #
 ###############################################################################
-
 import yaml
 import argparse
 import sys
@@ -63,76 +62,70 @@ def create_directory(absfolder_path):
             raise
 
 #Function to generate the tokugawa service
-def generate_tokugawa_service(installation_dir, executable_prefix, masternode_names):
-    with open('/etc/init.d/tokugawa', 'w') as config:
-        config.write('#! /bin/sh\n\
-### BEGIN INIT INFO\n\
-# Provides:          Tokugawad\n\
-# Required-Start:\n\
-# Required-Stop:\n\
-# Default-Start:     2 3 4 5\n\
-# Default-Stop:      0 1 6\n\
-# Short-Description: Provides tokugawad service.\n\
-### END INIT INFO\n\
-\n');
+def generate_init_service(afilename, name, start_command, stop_command):
+    with open(afilename, 'w') as config:
+        config.write('#! /bin/sh\n');
+        config.write('### BEGIN INIT INFO\n');
+        config.write("# Provides:          %s\n" %name);
+        config.write('# Required-Start:\n');
+        config.write('# Required-Stop:\n');
+        config.write('# Default-Start:     2 3 4 5\n');
+        config.write('# Default-Stop:      0 1 6\n');
+        config.write("# Short-Description: %s masternode service\n" %name);
+        config.write('### END INIT INFO\n');
+        config.write('\n')
         config.write("PIDOF_PROG=/bin/pidof\n");
-        config.write("MASTERNODES=\"%s\"\n" %masternode_names);
-        config.write("TOKUGAWAD_FOLDER=%s\n" %installation_dir);
-        config.write("TOKUGAWAD_PREFIX=%s\n" %executable_prefix);
-        config.write('case "$1" in\n\
-    start)\n\
-        for MN in ${MASTERNODES}; do\n\
-            TOKUGAWAD_PROG="${TOKUGAWAD_FOLDER}/${TOKUGAWAD_PREFIX}_${MN}";\n\
-            echo "Starting Tokugawad ${MN}";\n\
-            sudo -u root ${TOKUGAWAD_PROG} -datadir=${TOKUGAWAD_FOLDER}/.${MN};\n\
-        done\n\
-    ;;\n\
-    restart|reload|force-reload)\n\
-        echo "Error: argument \'$1\' not supported" >&2\n\
-        exit 3\n\
-    ;;\n\
-    status)\n\
-        for MN in ${MASTERNODES}; do\n\
-            TOKUGAWAD_PROG="${TOKUGAWAD_FOLDER}/${TOKUGAWAD_PREFIX}_${MN}";\n\
-            TOKUGAWAD_PROG_PID=`sudo -u root ${PIDOF_PROG} ${TOKUGAWAD_PROG}`;\n\
-            if [ $? -eq 0 ]; then\n\
-                echo "Tokugawad ${MN} is running with pid ${TOKUGAWAD_PROG_PID}"\n\
-            else\n\
-                echo "Tokugawad ${MN} is not running"\n\
-            fi\n\
-        done\n\
-    ;;\n\
-    stop)\n\
-        for MN in ${MASTERNODES}; do\n\
-            TOKUGAWAD_PROG="${TOKUGAWAD_FOLDER}/${TOKUGAWAD_PREFIX}_${MN}";\n\
-            TOKUGAWAD_PROG_PID=`sudo -u root ${PIDOF_PROG} ${TOKUGAWAD_PROG}`;\n\
-            echo "Stopping Tokugawad ${MN}";\n\
-            sudo -u root ${TOKUGAWAD_PROG} -datadir=${TOKUGAWAD_FOLDER}/.${MN} stop;\n\
-        done\n\
-    ;;\n\
-    *)\n\
-        echo "Usage: $0 start|stop" >&2\n\
-        exit 3\n\
-    ;;\n\
-esac\n');
-    #Set execution rights to file
-    os.chmod('/etc/init.d/tokugawa', 0o755)
+        config.write('\n')
+        config.write('case "$1" in\n');
+        config.write('  start)\n');
+        config.write("    echo \"Starting %s\";\n" %name);
+        config.write("    sudo -u root %s;\n" %start_command);
+        config.write('  ;;\n');
+        config.write('  restart|reload|force-reload)\n');
+        config.write('    echo "Error: argument \'$1\' not supported" >&2\n');
+        config.write('    exit 3\n');
+        config.write('  ;;\n');
+        config.write('  status)\n');
+        config.write("    PROG_PID=`sudo -u root ${PIDOF_PROG} %s`;\n" %start_command);
+        config.write('    if [ $? -eq 0 ]; then\n');
+        config.write("      echo \"%s is running with pid ${PROG_PID}\"\n" %name);
+        config.write('    else\n');
+        config.write("      echo \"%s is not running\"\n" %name);
+        config.write('    fi\n');
+        config.write('  ;;\n');
+        config.write('  stop)\n');
+        config.write("    PROG_PID=`sudo -u root ${PIDOF_PROG} %s`;\n" %start_command);
+        config.write("    echo \"Stopping %s\";\n" %name);
+        config.write("    sudo -u root %s;\n" %stop_command);
+        config.write('  ;;\n');
+        config.write('  *)\n');
+        config.write('    echo "Usage: $0 start|stop" >&2\n');
+        config.write('    exit 3\n');
+        config.write('  ;;\n');
+        config.write('esac\n');
 
-#Function to generate the tokugawa-server UFW application profile
-def generate_ufw_profile(dest_folder, app, str_ports):
-    #Default application profile name
-    app_profilename = "%s-server" %app['name'].lower()
+    #Set access rights to file
+    os.chmod(afilename, 0o755)
+
+#Function to generate an UFW application profile
+def generate_ufw_profile(afilename, name, title, description, ports, protocols):
     #Write application profile
-    with open(dest_folder+'/'+app_profilename, 'w') as config:
-        config.write('[%s]\n' %app['name'])
-        config.write('title=%s\n' %app['title'])
-        config.write('description=%s\n' %app['description'])
-        #Note protocol is tcp for that service only
-        config.write('ports=%s/%s\n' %(str_ports, app['protocol']))
+    with open(afilename, 'w') as config:
+        config.write("[%s]\n"           %name)
+        config.write("title=%s\n"       %title)
+        config.write("description=%s\n" %description)
+        #Build string for ports
+        str_ports     = "".join("%s," %p for p in ports)
+        str_protocols = "".join("%s/" %p for p in protocols)
+        #Add ports and protocols removing trainling char
+        config.write("ports=%s/%s\n"    %(str_ports[:-1], str_protocols[:-1]))
+
+    #Set access rights to file
+    os.chmod(afilename, 0o644)
 
 # Function to generate the Tokugawa.conf file under the MN directory
-def generate_mn_tokugawaconf(dest_folder, mn):
-    with open(dest_folder+'/'+'Tokugawa.conf', 'w') as config:
+def generate_masternode_tokugawaconf(afilename, mn):
+    with open(afilename, 'w') as config:
         config.write('rpcuser=myrpcuser%s\n' % mn['name'].lower())
         config.write('rpcpassword=%s\n' % generate_password())
         config.write('rpcport=%s\n' % mn['rpcport'])
@@ -143,6 +136,28 @@ def generate_mn_tokugawaconf(dest_folder, mn):
         config.write('masternodeaddr=%s:%s\n' % (mn['ip'], mn['port']))
         config.write('masternode=1\n')
         config.write('masternodeprivkey=%s\n' % mn['privkey'])
+
+    #Set access rights to file
+    os.chmod(afilename, 0o644)
+
+
+def install_tokugawa_masternode():
+    return "tokugawa"
+
+
+def install_smartcash_masternode():
+    return "smartcash"
+
+switcher = {
+    'Tokugawa':  install_tokugawa,
+    'Smartcash': install_smartcash
+}
+
+def install_masternode(coinname, configuration):
+    # Get the function from switcher dictionary
+    func = switcher.get(coinname, "nothing")
+    # Execute the function
+    return func()
 
 #Function to install a masternode in the desire location
 def install_masternode(mn, installation_dir, executable, bootstrap):
@@ -198,35 +213,35 @@ with open(configuration, 'r') as ymlfile:
 show_banner()
 show_warning(cfg['SYSTEM']['description'])
 
+print('[PREREQUISITES]')
+print('  >> Installing required packages [TBD]')
+
 print('[INSTALLATION START]')
-
-#Install all packages dependencies
-print("  >> Installing required packages [TBD]")
-
-#Loop through all and install them
 for mn in cfg['MASTERNODES']:
-    print("  >> Installing masternode: %s" %mn['name'])
+    #Masternode name header
+    print("  %s_%s" %(coin_name, %mn['name']))
+    #Install masternode software
+    print('    >> Installing masternode')
     install_masternode(mn, installation_dir, executable, bootstrap)
+    #Generating boot service
+    print('    >> Generating /etc/init.d service')
+    generate_masternode_service(mn, )
+    masternode_names = "".join("%s " %mn['name'] for mn in cfg['MASTERNODES'])
+    masternode_executable_basename = os.path.basename(executable)
+    #Generate the service filename
+    generate_tokugawa_service(installation_dir, masternode_executable_basename, masternode_names)
+    #Generating firewall profile
+    print('   >> Generating UFW firewall rules')
+    generate_ufw_profile('/etc/ufw/applications.d/', app)
+    #Allow firewall profile
 
-#Install Tokugawa as boot service
-print("  >> Configuring Tokugawa service")
-masternode_names = "".join("%s " %mn['name'] for mn in cfg['MASTERNODES'])
-masternode_executable_basename = os.path.basename(executable)
-#Generate the service filename
-generate_tokugawa_service(installation_dir, masternode_executable_basename, masternode_names)
+#Enable services
+if cfg['services'] == 'enabled':
+    print(' >> Enabling services')
 
-#Firewall installation if present
-print("  >> Configuring UFW firewall")
-for app in cfg['FIREWALL']['PROFILES']:
-    #Generate string in that way 1,2,3,4 and remove the trailing comma
-    if app['ports'][0]=='MASTERNODES':
-        str_ports = "".join("%s," %mn['port'] for mn in cfg['MASTERNODES'])
-    else:
-        str_ports = "".join("%s," %port for port in app['ports'])
-    str_ports = str_ports[:-1]
-
-    #Generate UFW application profile
-    generate_ufw_profile('/etc/ufw/applications.d/', app, str_ports)
+#Enable firewall
+if cfg['firewall'] == 'enabled':
+    print(' >> Activating firewall')
 
 print('[INSTALLATION FINISH]')
 print('')

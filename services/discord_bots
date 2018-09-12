@@ -13,8 +13,8 @@ PYTHON_PROG=`which python3`
 case "$1" in
   start)
 	echo "Starting Discord Bots"
-	${PYTHON_PROG} /root/.Discord_Bots/discord_superbot.py config_tokugawa.yml  &
-	${PYTHON_PROG} /root/.Discord_Bots/discord_superbot.py config_smartcash.yml &
+	sudo -u root ${PYTHON_PROG} /root/.Discord_Bots/discord_superbot.py config_tokugawa.yml  &
+	sudo -u root ${PYTHON_PROG} /root/.Discord_Bots/discord_superbot.py config_smartcash.yml &
 	;;
   restart|reload|force-reload)
 	echo "Error: argument '$1' not supported" >&2
@@ -33,9 +33,9 @@ case "$1" in
         TOKBOT_PID=`ps ax | grep 'config_tokugawa' | grep -v grep | awk '{print $1}'`
         SMARTBOT_PID=`ps ax | grep 'config_smartcash' | grep -v grep | awk '{print $1}'`
         if [ ! -z "$TOKBOT_PID" ] & [ ! -z "$SMARTBOT_PID" ] ; then
-		echo "Stopping Discord BOTs"
-		kill -9 ${TOKBOT_PID}
-		kill -9 ${SMARTBOT_PID}
+	        echo "Stopping Discord BOTs"
+		    sudo -u root kill -9 ${TOKBOT_PID}
+		    sudo -u root kill -9 ${SMARTBOT_PID}
         else
                 echo "Discord BOTs are not running"
         fi

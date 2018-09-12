@@ -48,6 +48,10 @@ FIREWALL:
 #         Define your IP, port and private keys                               #
 #         NOTE: Use the same ip address if sharing same VPS for all MNs       #
 ###############################################################################
+coinname: Tokugawa
+firewall: enabled
+services: enabled
+
 MASTERNODES:
       - name:             MN01
         rpcport:          21116          
