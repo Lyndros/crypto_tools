@@ -1,11 +1,13 @@
 <html>
 <body style="font-family: Consolas, monospace; font-size:14pt;">
-<b>Tokugawa Masternode beta installer instructions</b>
+<b>Masternode installer instructions</b>
 <br/> ────────────────────────────────────────────────────
 <br/>
 <br/> BROKEN BUILD WORK IN PROGRESS... SORRY
 <br/>
-<br/> A beautiful python installer that allows you to install your tokugawa masternodes withing minutes.
+<br/> A beautiful python installer that allows you to install your beloved masternodes withing minutes.
+<br/> 
+<br/> NOTE: Currently the installer ONLY supports TOKUGAWA coin, more coins will be added.
 <br/>
 <br/> <b>0. Requirements</b>
 <br/>
@@ -15,19 +17,19 @@
 <br/> $sudo apt install ufw
 <br/> 
 <br/> In addition the following files are needed:
-<br/> &nbsp; &nbsp; - A precompiled binary containing the latest version of the Tokugawa daemon 
+<br/> &nbsp; &nbsp; - A precompiled binary containing the latest version of the masternode daemon 
 <br/> &nbsp; &nbsp;   NOTE: that the binary dependant libraries must be pre-installed (Work on progress).
 <br/> &nbsp; &nbsp; - Ufw firewall will be automatically configured to enable SSH/Tokugawa ports. ($apt install ufw).
 <br/> &nbsp; &nbsp; - [Optional] A bootstrap file to accelerate the initial masternode synchronisation.
 <br/>
 <br/> <b>1. Copying the necessary files</b>
 <br/>
-<br/> &nbsp; &nbsp; $mkdir -p /tmp/tokugawa_installer/
-<br/> &nbsp; &nbsp; $cd /tmp/tokugawa_installer/
-<br/> &nbsp; &nbsp; $wget https://raw.githubusercontent.com/Lyndros/crypto_tools/master/tokugawa_installer/tokugawa_installer.py
+<br/> &nbsp; &nbsp; $mkdir -p /tmp/masternode_installer/
+<br/> &nbsp; &nbsp; $cd /tmp/masternode_installer/
+<br/> &nbsp; &nbsp; $wget https://raw.githubusercontent.com/Lyndros/crypto_tools/master/masternode_installer/masternode_installer.py
 <br/>
 <br/> -- This is a configuration example, please modify as needed before running the installer--
-<br/> &nbsp; &nbsp; $wget https://raw.githubusercontent.com/Lyndros/crypto_tools/master/tokugawa_installer/masternodes.yml
+<br/> &nbsp; &nbsp; $wget https://raw.githubusercontent.com/Lyndros/crypto_tools/master/masternode_installer/tokugawa_config.yml
 <br/>
 <br/> &nbsp; &nbsp; In addition get your tokugawad binary from your favourite source or compile it.
 <br/> &nbsp; &nbsp; A bootstrap.dat file is optional but very recommended if you want to have your MNs running asap.
@@ -38,18 +40,18 @@
 <br/> If you run multiple masternodes in the same VPS, you can share the IP, take into account that ports must be different.
 <br/>
 <br/> <b>3. Running the installer</b>
-<br/> &nbsp; &nbsp; $./tokugawa_installer.py installation_directory tokugawad_executable configuration.yml [ --bootstrap bootstrap.dat ]
+<br/> &nbsp; &nbsp; $./masternode_installer.py installation_directory tokugawad_executable configuration.yml [ --bootstrap bootstrap.dat ]
 <br/>
 <br/> &nbsp; &nbsp; Execution examples:
-<br/> &nbsp; &nbsp; $./tokugawa_installer.py /opt/tokugawa /tmp/tokugawad /tmp/masternodes.yml --bootstrap /tmp/bootstrap.dat
-<br/> &nbsp; &nbsp; $./tokugawa_installer.py /opt/tokugawa /tmp/tokugawad /tmp/masternodes.yml
+<br/> &nbsp; &nbsp; $./masternode_installer.py /opt/tokugawa /tmp/tokugawad /tmp/tokugawa_config.yml --bootstrap /tmp/bootstrap.dat
+<br/> &nbsp; &nbsp; $./masternode_installer.py /opt/tokugawa /tmp/tokugawad /tmp/tokugawa_config.yml
 <br/>
 <br/> <b>4. Enabling tokugawa services automatically at boot</b>
-<br/> &nbsp; &nbsp; $systemctl enable tokugawa
+<br/> &nbsp; &nbsp; $systemctl enable tokugawa_mn*
 <br/> 
 <br/> If during the installation ufw firewall was detected the following steps must be done:
 <br/> &nbsp; &nbsp; $ufw stop; 
-<br/> &nbsp; &nbsp; $ufw allow tokugawa; $ufw enable; 
+<br/> &nbsp; &nbsp; $ufw allow tokugawa_mn*; $ufw enable; 
 <br/> &nbsp; &nbsp; $systemctl enable ufw;
 <br/>
 <br/> <b>5. Donations</b>

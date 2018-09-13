@@ -22,26 +22,6 @@ SYSTEM:
         description: Ubuntu 18.04
         packages:    build-essential libtool autotools-dev pkg-config libssl-dev libboost-all-dev autoconf automake
                      libqt4-dev libminiupnpc-dev libgmp-dev openssl libdb4.8-dev libdb4.8++-dev
-#FIREWALL SETTINGS
-FIREWALL:
-        description:    UFW firewall settings
-        packages:       ufw
-
-        PROFILES:
-          - name:         OpenSSH
-            title:        Secure shell server, an rshd replacement
-            description:  OpenSSH Secure Shell protocol.
-            ports:
-              - 22
-            protocol:     tcp
-
-          - name:         Tokugawa
-            title:        Tokugawa MN Daemon
-            description:  Masternode service for tokugawa coin
-            #NOTE: SET PORTS TO 'MASTERNODES' TO AUTOGENERATE PORTS FROM BELOW MN LIST#
-            ports:
-              - MASTERNODES
-            protocol:     tcp
 
 ###############################################################################
 #         MASTERNODE CONFIGURATION                                            #
@@ -51,16 +31,23 @@ FIREWALL:
 coinname: Tokugawa
 firewall: enabled
 services: enabled
+test:     enabled                                 #PACKAGES ARE NOT INSTALLED
 
 MASTERNODES:
       - name:             MN01
         rpcport:          21116          
         ip:               $IP_ADDR_MN01$          #IP FOR MN01
-        port:             21117                   #EXTERNAL PORT FOR MN01
+        ports:
+          - 21117                                 #EXTERNAL PORT FOR MN01
+        protocols:
+          - tcp
         privkey:          $MN01_PRIVKEY$
 
       - name:             MN02
         rpcport:          21118
         ip:               $IP_ADDR_MN02$          #IP FOR MN02 can be equal to MN01
-        port:             21119                   #EXTERNAL PORT FOR MN02
+        ports:
+          - 21119                                #EXTERNAL PORT FOR MN02
+        protocols:
+          - tcp
         privkey:          $MN02_PRIVKEY$
