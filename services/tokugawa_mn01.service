@@ -1,14 +1,15 @@
 [Unit]
-Description=TOKUGAWA MN01
+Description=TOKUGAWA_MN01
 After=network-online.target
 
 [Service]
 User=tokugawa
-Type=simple
+Type=forking
 WorkingDirectory=/opt/tokugawa
 Restart=always
+RestartSec=10
 ExecStart=/opt/tokugawa/tokugawad_mn01 -datadir=/opt/tokugawa/.mn01/
 ExecStop=/opt/tokugawa/tokugawad_mn01 -datadir=/opt/tokugawa/.mn01/ stop
 
 [Install]
-WantedBy=multi-user.target
+
