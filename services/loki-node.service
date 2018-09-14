@@ -1,0 +1,13 @@
+[Unit]
+Description=Loki Node
+After=network-online.target
+
+[Service]
+User=snode
+Type=simple
+WorkingDirectory=~
+Restart=always
+ExecStart=/home/snode/loki-linux-x64-1.0.0-rc.3/lokid --service-node --non-interactive
+
+[Install]
+WantedBy=multi-user.target
