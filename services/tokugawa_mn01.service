@@ -1,5 +1,5 @@
 [Unit]
-Description=TOKUGAWA_MN01
+Description=TOKUGAWA_MN01 masternode service
 After=network-online.target
 
 [Service]
@@ -12,4 +12,4 @@ ExecStart=/opt/tokugawa/tokugawad_mn01 -datadir=/opt/tokugawa/.mn01/
 ExecStop=/opt/tokugawa/tokugawad_mn01 -datadir=/opt/tokugawa/.mn01/ stop
 
 [Install]
-
+WantedBy=multi-user.target
