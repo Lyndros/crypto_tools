@@ -7,7 +7,8 @@ User=snode
 Type=simple
 WorkingDirectory=~
 Restart=always
-ExecStart=/home/snode/loki-linux-x64-1.0.0-rc.3/lokid --service-node --non-interactive
+ExecStart=/home/snode/loki-linux-x64-1.0.1/lokid --service-node --non-interactive --max-log-files 5
+ExecStop=/home/snode/loki-linux-x64-1.0.1/lokid stop_daemon
 
 [Install]
 WantedBy=multi-user.target
