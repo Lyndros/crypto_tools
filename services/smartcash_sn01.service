@@ -1,0 +1,15 @@
+[Unit]
+Description=Smartnode SN01 service
+After=network-online.target
+
+[Service]
+User=smartcash
+Type=forking
+WorkingDirectory=/opt/smartcash/
+Restart=always
+RestartSec=10
+ExecStart=/usr/bin/smartcashd -datadir='/opt/smartcash/.sn01/'
+ExecStop=/usr/bin/smartcash-cli -datadir='/opt/smartcash/.sn01/' stop
+
+[Install]
+WantedBy=multi-user.target
