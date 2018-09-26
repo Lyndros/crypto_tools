@@ -7,7 +7,6 @@ A beautiful repository for my crypto related scripts/tools.
 <br/>
 &nbsp;- binance_bots/          	# Bots based in python binance api.<br/>
 &nbsp;- catalyst_bots/         	# Bots for different exchanges based in enigma catalyst.<br/>
-&nbsp;- discord_bots/          	# Bots for discord app connecting to the MN explorer API.<br/>
 &nbsp;- services/              	# Linux scripts to add MN and BOT services at boot time.<br/>
 &nbsp;- masternode_installer/   # Automatic masternode installer<br/>
 <br/>
