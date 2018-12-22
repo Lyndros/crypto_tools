@@ -1,38 +1,21 @@
 #!/usr/bin/env python3
-# Copyright (c) 2018 Lyndros
+# Copyright (c) 2018 Lyndros <lyndros@hotmail.com>
 # Distributed under the MIT/X11 software license, see the accompanying
 # file COPYING or http://www.opensource.org/licenses/mit-license.php.
-################################################################################
-#                          CONFIGURATION PARAMETERS                            #
-################################################################################
-#Enable by default to test the bot and do not send the actions
-TEST_MODE = 1
-#List of coins being monitored by the bot
-#Be extremelly carefull when setting the buy price
-MONITORED_COINS = (
-    #Parameters for Storm
-    {"COIN_NAME":              "Storm",
-     "COIN_ACRONYM":           "STORM",
-     "BUY_PRICE_BTC":          "0.00000279",
-     "TAKE_PROFIT_PERCENTAGE": +30,
-     "STOP_LOSS_PERCENTAGE":   -15 },
-    #Parameters for Groestlcoin
-    {"COIN_NAME":              "Groestlcoin",
-     "COIN_ACRONYM":           "GRS",
-     "BUY_PRICE_BTC":          "0.00008677",
-     "TAKE_PROFIT_PERCENTAGE": +30,
-     "STOP_LOSS_PERCENTAGE":   -15 },
-     #Parameters for Wanchain
-     {"COIN_NAME":              "Wanchain",
-      "COIN_ACRONYM":           "WAN",
-      "BUY_PRICE_BTC":          "0.00034490",
-      "TAKE_PROFIT_PERCENTAGE": +30,
-      "STOP_LOSS_PERCENTAGE":   -15 })
-
-#BINANCE API KEY TO RUN MY BOT
-API_KEY         = ""
-API_SECRET      = ""
-################################################################################
+###############################################################################
+# Trade monitor by Lyndros <lyndros@hotmail.com>                   #
+###############################################################################
+# Repository: https://github.com/Lyndros/crypto_tools                         #
+#                                                                             #
+# If you want to support and motivate me I accept donations even 1 TOK is     #
+# always welcome :-)!                                                         #
+# > ethereum address: 0x44F102616C8e19fF3FED10c0b05B3d23595211ce              #
+# > tokugawa address: TqtycVQsthmEtMLGA8RtqHupZNPDH1Fnt9                      #
+#                                                                             #
+###############################################################################
+import yaml
+import os
+import argparse
 from binance.client import Client
 
 def get_current_price_btc(coin_acronym):
@@ -52,7 +35,28 @@ def sell_coin_btc(coin_acronym):
 def hodl_coin_btc(coin_acronym):
     print("HODL: Keep calm and keep holding")
 
-client = Client(API_KEY, API_SECRET)
+###############################################################################
+#                                    MAIN                                     #
+###############################################################################
+#Program input parameters
+parser = argparse.ArgumentParser()
+parser.add_argument("configuration", help="The trade monitor configuration file.")
+args = parser.parse_args()
+
+#Build abs names to avoid problems
+configuration_abspath = os.path.abspath(args.configuration)
+
+#Check input files
+if not os.path.exists(configuration_abspath):
+    print("Error! Could not open configuration file.")
+    sys.exit(-1)
+
+#Parse the configuration file
+with open(configuration_abspath, 'r') as ymlfile:
+    CONFIG = yaml.load(ymlfile)
+
+#Load the API key
+client = Client(CONFIG['API_KEY'], CONFIG['API_SECRET'])
 
 """
 status = client.get_system_status()
@@ -71,14 +75,14 @@ trades = client.get_my_trades(symbol='GRSBTC')
 print(trades)
 """
 
-for mycoin in MONITORED_COINS:
+for mycoin in CONFIG['COINS']:
     #Display coin information
     print("######################################")
-    print("Name:          %s (%s)" %(mycoin['COIN_NAME'], mycoin['COIN_ACRONYM']))
-    mycoin_current_balance = client.get_asset_balance(asset=mycoin['COIN_ACRONYM'])
-    print("Balance:       %s %s"   %(mycoin_current_balance['free'], mycoin['COIN_ACRONYM']))
+    print("Name:          %s (%s)" %(mycoin['NAME'], mycoin['ACRONYM']))
+    mycoin_current_balance = client.get_asset_balance(asset=mycoin['ACRONYM'])
+    print("Balance:       %s %s"   %(mycoin_current_balance['free'], mycoin['ACRONYM']))
     print("Buy price:     %s BTC"  %mycoin['BUY_PRICE_BTC'])
-    mycoin_current_price = get_current_price_btc(mycoin['COIN_ACRONYM'])
+    mycoin_current_price = get_current_price_btc(mycoin['ACRONYM'])
     print("Current price: %s BTC"  %mycoin_current_price)
     mycoin_delta= (float(mycoin_current_price)*100/float(mycoin['BUY_PRICE_BTC']))-100
     print("Delta:         {:.2f}%".format(mycoin_delta))
@@ -88,11 +92,11 @@ for mycoin in MONITORED_COINS:
 
     #SET STOP LOSS
     if   mycoin_delta < float(mycoin['STOP_LOSS_PERCENTAGE']):
-        stop_loss_btc(mycoin['COIN_ACRONYM'])
+        stop_loss_btc(mycoin['ACRONYM'])
     #TAKE PROFIT
     elif float(mycoin_delta) >= float(mycoin['TAKE_PROFIT_PERCENTAGE']):
-        sell_coin_btc(mycoin['COIN_ACRONYM'])
+        sell_coin_btc(mycoin['ACRONYM'])
     #HOLD COIN
     else:
-        hodl_coin_btc(mycoin['COIN_ACRONYM'])
+        hodl_coin_btc(mycoin['ACRONYM'])
     print("######################################")

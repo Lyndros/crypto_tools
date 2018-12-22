@@ -1,0 +1,41 @@
+###############################################################################
+# Trade monitor by Lyndros <lyndros@hotmail.com>                              #
+###############################################################################
+# Repository: https://github.com/Lyndros/crypto_tools                         #
+#                                                                             #
+# If you want to support and motivate me I accept donations even 1 TOK is     #
+# always welcome :-)!                                                         #
+# > ethereum address: 0x44F102616C8e19fF3FED10c0b05B3d23595211ce              #
+# > tokugawa address: TqtycVQsthmEtMLGA8RtqHupZNPDH1Fnt9                      #
+#                                                                             #
+###############################################################################
+###############################################################################
+#                      BINANCE CONFIGURATION PARAMETERS                       #
+###############################################################################
+# Enable by default to test the bot and do not send the actions
+TEST_MODE:   enabled
+API_KEY:     API_KEY_EXAMPLE
+API_SECRET:  API_KEY_EXAMPLE
+###############################################################################
+# MONITOR CONFIGURATION
+# List of coins being monitored by the bot
+# Be extremelly carefull when setting the buy price
+COINS:
+    - NAME:                     Storm
+      ACRONYM:                  STORM
+      BUY_PRICE_BTC:            0.00000279
+      TAKE_PROFIT_PERCENTAGE:   +30
+      STOP_LOSS_PERCENTAGE:     -15
+
+    - NAME:                     Groestlcoin
+      ACRONYM:                  GRS
+      BUY_PRICE_BTC:            0.00008677
+      TAKE_PROFIT_PERCENTAGE:   +30
+      STOP_LOSS_PERCENTAGE:     -15
+
+    - NAME:                     Wanchain
+      ACRONYM:                  WAN
+      BUY_PRICE_BTC:            0.00034490
+      TAKE_PROFIT_PERCENTAGE:   +30
+      STOP_LOSS_PERCENTAGE:     -15
+###############################################################################
